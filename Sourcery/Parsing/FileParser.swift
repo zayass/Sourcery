@@ -844,7 +844,7 @@ extension FileParser {
 }
 
 extension String {
-    
+
     func strippingComments() -> String {
         var finished: Bool
         var stripped = self
@@ -861,8 +861,8 @@ extension String {
                 finished = false
             }
         } while !finished
-        
+
         return stripped
     }
-    
+
 }

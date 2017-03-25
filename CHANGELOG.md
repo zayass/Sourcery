@@ -12,6 +12,7 @@
 - Added access level filters and disabled filtering private declarations
 - Added support for inline comments for annotations with `/*` and `*/`
 - Added annotations for enum case associated values and method parameters
+- Added docs generated with jazzy
 
 ## 0.5.9
 

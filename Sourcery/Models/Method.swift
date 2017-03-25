@@ -24,7 +24,7 @@ public final class MethodParameter: NSObject, SourceryModel, Typed, Annotated {
     }
 
     /// Annotations, that were created with // sourcery: annotation1, other = "annotation value", alterantive = 2
-    var annotations: [String: NSObject] = [:]
+    public internal(set) var annotations: [String: NSObject] = [:]
 
     /// Underlying parser data, never to be used by anything else
     // sourcery: skipEquality, skipDescription, skipCoding, skipJSExport
@@ -77,12 +77,12 @@ public final class Method: NSObject, SourceryModel, Annotated {
     /// Method name including arguments names, i.e. `foo(bar:)`
     public let selectorName: String
 
-    /// Method name without arguments names and parenthesis, i.e. `foo<t>`
+    /// Method name without arguments names and parenthesis, i.e. `foo<T>`
     public var shortName: String {
         return name.range(of: "(").map({ name.substring(to: $0.lowerBound) }) ?? name
     }
 
-    /// Method name without arguments names, parenthesis and generic types, i.e. `foo`
+    /// Method name without arguments names, parenthesis and generic types, i.e. `foo` (can be used to generate code for method call)
     public var callName: String {
         return shortName.range(of: "<").map({ shortName.substring(to: $0.lowerBound) }) ?? shortName
     }
@@ -90,10 +90,10 @@ public final class Method: NSObject, SourceryModel, Annotated {
     /// Method parameters
     public var parameters: [MethodParameter]
 
-    /// Return value type name
+    /// Return value type name used in declaration
     public var returnTypeName: TypeName
 
-    /// Actual return value type name, if it is a typealias
+    /// Actual return value type name if declaration uses typealias, otherwise just a `returnTypeName`
     public var actualReturnTypeName: TypeName {
         return returnTypeName.actualTypeName ?? returnTypeName
     }
@@ -132,7 +132,7 @@ public final class Method: NSObject, SourceryModel, Annotated {
     /// Whether method is a class method
     public let isClass: Bool
 
-    /// Whether method is a constructor
+    /// Whether method is an initializer
     public var isInitializer: Bool {
         return selectorName.hasPrefix("init(")
     }
